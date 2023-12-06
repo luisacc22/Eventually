@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="web_logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Signika:wght@500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/kute.js@2.1.2/dist/kute.min.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-analytics.js";
+        import { getAuth, createUserWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyDx3w3AbkcObfBIouSly5lkENCxqr6ybJ8",
+          authDomain: "specrel-eventuall.firebaseapp.com",
+          projectId: "specrel-eventuall",
+          storageBucket: "specrel-eventuall.appspot.com",
+          messagingSenderId: "1072983230032",
+          appId: "1:1072983230032:web:bc6f773b3dbd76eb6e7355",
+          measurementId: "G-CHNBRM8KT3"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth();
+        const db = getDatabase(app);
+
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("register").addEventListener("click", async function (event) {
+                event.preventDefault();
+
+                var email = document.getElementById("email").value;
+                var password = document.getElementById("password").value;
+                var firstName = document.getElementById("firstName").value;
+                var lastName = document.getElementById("lastName").value;
+                var address = document.getElementById("address").value;
+                var dobMonth = document.getElementById("month").value;
+                var dobDay = document.getElementById("day").value;
+                var dobYear = document.getElementById("year").value;
+                var dob = dobMonth + '/' + dobDay + '/' + dobYear;
+
+                try {
+                    //Register
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    // Signed in
+                    const user = userCredential.user;
+                    console.log(user);
+                    alert("Registration successfully!!");
+
+                    
+                    await set(ref(db, 'users/' + user.uid), {
+                        email: email,
+                        firstName: firstName,
+                        lastName: lastName,
+                        address: address,
+                        dob: dob
+                        
+                    });
+
+                    console.log("User data saved to Realtime Database");
+
+                    window.location.href = 'index.html';
+                } catch (error) {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error('Error code:', errorCode);
+                    console.error('Error message:', errorMessage);
+                    alert(errorMessage);
+
+                    return;
+                }
+
+                console.log('Registration successful!');
+            });
+        });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventually</title>
+    <link rel="stylesheet" type="text/css" href="signup-styles.css">
+</head>
+<body>
+    <div class="blur">
+    <div class="blob-container">
+        <div class="blob">
+            <svg id="visual" viewBox="0 0 1600 450" width="1600" height="450" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+                <path id="wave1" d="M0 320L38.2 316.7C76.3 313.3 152.7 306.7 228.8 303.5C305 300.3 381 300.7 457.2 298.5C533.3 296.3 609.7 291.7 685.8 297.3C762 303 838 319 914.2 316.3C990.3 313.7 1066.7 292.3 1142.8 283C1219 273.7 1295 276.3 1371.2 285.7C1447.3 295 1523.7 311 1561.8 319L1600 327L1600 451L1561.8 451C1523.7 451 1447.3 451 1371.2 451C1295 451 1219 451 1142.8 451C1066.7 451 990.3 451 914.2 451C838 451 762 451 685.8 451C609.7 451 533.3 451 457.2 451C381 451 305 451 228.8 451C152.7 451 76.3 451 38.2 451L0 451Z" fill="#5e7ee0"></path>
+                <path id="wave1next" d="M0 262L20.5 269.8C41 277.7 82 293.3 123 298C164 302.7 205 296.3 246 294.3C287 292.3 328 294.7 369 301C410 307.3 451 317.7 492 317.5C533 317.3 574 306.7 615 296.5C656 286.3 697 276.7 738.2 275.5C779.3 274.3 820.7 281.7 861.8 290.3C903 299 944 309 985 305.3C1026 301.7 1067 284.3 1108 286.7C1149 289 1190 311 1231 322.3C1272 333.7 1313 334.3 1354 333.8C1395 333.3 1436 331.7 1477 320.8C1518 310 1559 290 1579.5 280L1600 270L1600 451L1579.5 451C1559 451 1518 451 1477 451C1436 451 1395 451 1354 451C1313 451 1272 451 1231 451C1190 451 1149 451 1108 451C1067 451 1026 451 985 451C944 451 903 451 861.8 451C820.7 451 779.3 451 738.2 451C697 451 656 451 615 451C574 451 533 451 492 451C451 451 410 451 369 451C328 451 287 451 246 451C205 451 164 451 123 451C82 451 41 451 20.5 451L0 451Z" fill="#5e7ee0" style="visibility:hidden;"></path>
+                <path id="wave2" d="M0 351L38.2 343.7C76.3 336.3 152.7 321.7 228.8 318.5C305 315.3 381 323.7 457.2 328C533.3 332.3 609.7 332.7 685.8 332C762 331.3 838 329.7 914.2 329.7C990.3 329.7 1066.7 331.3 1142.8 330C1219 328.7 1295 324.3 1371.2 324.3C1447.3 324.3 1523.7 328.7 1561.8 330.8L1600 333L1600 451L1561.8 451C1523.7 451 1447.3 451 1371.2 451C1295 451 1219 451 1142.8 451C1066.7 451 990.3 451 914.2 451C838 451 762 451 685.8 451C609.7 451 533.3 451 457.2 451C381 451 305 451 228.8 451C152.7 451 76.3 451 38.2 451L0 451Z" fill="#446ae7"></path>
+                <path id="wave2next" d="M0 345L20.5 338.3C41 331.7 82 318.3 123 313.2C164 308 205 311 246 313.3C287 315.7 328 317.3 369 316.5C410 315.7 451 312.3 492 313.5C533 314.7 574 320.3 615 328C656 335.7 697 345.3 738.2 345.8C779.3 346.3 820.7 337.7 861.8 330.8C903 324 944 319 985 317.5C1026 316 1067 318 1108 315.8C1149 313.7 1190 307.3 1231 312.2C1272 317 1313 333 1354 341.5C1395 350 1436 351 1477 352C1518 353 1559 354 1579.5 354.5L1600 355L1600 451L1579.5 451C1559 451 1518 451 1477 451C1436 451 1395 451 1354 451C1313 451 1272 451 1231 451C1190 451 1149 451 1108 451C1067 451 1026 451 985 451C944 451 903 451 861.8 451C820.7 451 779.3 451 738.2 451C697 451 656 451 615 451C574 451 533 451 492 451C451 451 410 451 369 451C328 451 287 451 246 451C205 451 164 451 123 451C82 451 41 451 20.5 451L0 451Z" fill="#446ae7" style="visibility:hidden;"></path>
+                <path id="wave3" d="M0 338L38.2 337.2C76.3 336.3 152.7 334.7 228.8 341.2C305 347.7 381 362.3 457.2 366.8C533.3 371.3 609.7 365.7 685.8 361.5C762 357.3 838 354.7 914.2 351.2C990.3 347.7 1066.7 343.3 1142.8 339.7C1219 336 1295 333 1371.2 334C1447.3 335 1523.7 340 1561.8 342.5L1600 345L1600 451L1561.8 451C1523.7 451 1447.3 451 1371.2 451C1295 451 1219 451 1142.8 451C1066.7 451 990.3 451 914.2 451C838 451 762 451 685.8 451C609.7 451 533.3 451 457.2 451C381 451 305 451 228.8 451C152.7 451 76.3 451 38.2 451L0 451Z" fill="#2b53eb"></path>
+                <path id="wave3next" d="M0 378L20.5 375C41 372 82 366 123 364.8C164 363.7 205 367.3 246 367C287 366.7 328 362.3 369 363.5C410 364.7 451 371.3 492 370.8C533 370.3 574 362.7 615 361.3C656 360 697 365 738.2 366.2C779.3 367.3 820.7 364.7 861.8 365.5C903 366.3 944 370.7 985 369.2C1026 367.7 1067 360.3 1108 353.8C1149 347.3 1190 341.7 1231 341C1272 340.3 1313 344.7 1354 343.7C1395 342.7 1436 336.3 1477 334C1518 331.7 1559 333.3 1579.5 334.2L1600 335L1600 451L1579.5 451C1559 451 1518 451 1477 451C1436 451 1395 451 1354 451C1313 451 1272 451 1231 451C1190 451 1149 451 1108 451C1067 451 1026 451 985 451C944 451 903 451 861.8 451C820.7 451 779.3 451 738.2 451C697 451 656 451 615 451C574 451 533 451 492 451C451 451 410 451 369 451C328 451 287 451 246 451C205 451 164 451 123 451C82 451 41 451 20.5 451L0 451Z" fill="#2b53eb" style="visibility:hidden;"></path>
+                <path id="wave4" d="M0 380L38.2 376.7C76.3 373.3 152.7 366.7 228.8 364C305 361.3 381 362.7 457.2 364.8C533.3 367 609.7 370 685.8 376.5C762 383 838 393 914.2 394.2C990.3 395.3 1066.7 387.7 1142.8 387.8C1219 388 1295 396 1371.2 398.2C1447.3 400.3 1523.7 396.7 1561.8 394.8L1600 393L1600 451L1561.8 451C1523.7 451 1447.3 451 1371.2 451C1295 451 1219 451 1142.8 451C1066.7 451 990.3 451 914.2 451C838 451 762 451 685.8 451C609.7 451 533.3 451 457.2 451C381 451 305 451 228.8 451C152.7 451 76.3 451 38.2 451L0 451Z" fill="#1837eb"></path>
+                <path id="wave4next" d="M0 373L20.5 376.8C41 380.7 82 388.3 123 390.7C164 393 205 390 246 384.7C287 379.3 328 371.7 369 371C410 370.3 451 376.7 492 382.3C533 388 574 393 615 392.7C656 392.3 697 386.7 738.2 381.8C779.3 377 820.7 373 861.8 371C903 369 944 369 985 370.5C1026 372 1067 375 1108 375.5C1149 376 1190 374 1231 377.7C1272 381.3 1313 390.7 1354 389.8C1395 389 1436 378 1477 375C1518 372 1559 377 1579.5 379.5L1600 382L1600 451L1579.5 451C1559 451 1518 451 1477 451C1436 451 1395 451 1354 451C1313 451 1272 451 1231 451C1190 451 1149 451 1108 451C1067 451 1026 451 985 451C944 451 903 451 861.8 451C820.7 451 779.3 451 738.2 451C697 451 656 451 615 451C574 451 533 451 492 451C451 451 410 451 369 451C328 451 287 451 246 451C205 451 164 451 123 451C82 451 41 451 20.5 451L0 451Z" fill="#1837eb" style="visibility:hidden;"></path>
+                <path id="wave5" d="M0 402L38.2 404.5C76.3 407 152.7 412 228.8 412.5C305 413 381 409 457.2 410.7C533.3 412.3 609.7 419.7 685.8 421.2C762 422.7 838 418.3 914.2 414.2C990.3 410 1066.7 406 1142.8 404C1219 402 1295 402 1371.2 401.7C1447.3 401.3 1523.7 400.7 1561.8 400.3L1600 400L1600 451L1561.8 451C1523.7 451 1447.3 451 1371.2 451C1295 451 1219 451 1142.8 451C1066.7 451 990.3 451 914.2 451C838 451 762 451 685.8 451C609.7 451 533.3 451 457.2 451C381 451 305 451 228.8 451C152.7 451 76.3 451 38.2 451L0 451Z" fill="#1b00e8"></path>
+                <path id="wave5next" d="M0 395L20.5 394.7C41 394.3 82 393.7 123 394.7C164 395.7 205 398.3 246 402C287 405.7 328 410.3 369 414.7C410 419 451 423 492 421.3C533 419.7 574 412.3 615 408C656 403.7 697 402.3 738.2 403.8C779.3 405.3 820.7 409.7 861.8 413.7C903 417.7 944 421.3 985 423.2C1026 425 1067 425 1108 420.3C1149 415.7 1190 406.3 1231 401.5C1272 396.7 1313 396.3 1354 399C1395 401.7 1436 407.3 1477 411.3C1518 415.3 1559 417.7 1579.5 418.8L1600 420L1600 451L1579.5 451C1559 451 1518 451 1477 451C1436 451 1395 451 1354 451C1313 451 1272 451 1231 451C1190 451 1149 451 1108 451C1067 451 1026 451 985 451C944 451 903 451 861.8 451C820.7 451 779.3 451 738.2 451C697 451 656 451 615 451C574 451 533 451 492 451C451 451 410 451 369 451C328 451 287 451 246 451C205 451 164 451 123 451C82 451 41 451 20.5 451L0 451Z" fill="#1b00e8" style="visibility:hidden;"></path>
+              </svg>
+        </div>
+
+    </div>
+    
+    <div class="form-container"> <!--form container-->
+        
+        <div class="signup-form">
+            <h2>Sign Up </h2>
+            <form>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">First Name</label>
+                    <input type="tel" id="firstName" name="firstName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Last Name</label>
+                    <input  id="lastName" name="lastName" required>
+                </div>
+
+                <div id="dob-align" class="form-group">
+                    <label for="dob">Date of Birth:</label>
+                    <div id="dob-selects">
+                        <select type="dob" id="month" name="month" required>
+                            <option value selected disabled>Month</option>
+                        </select>
+                        <select type="dob" id="day" name="day" required>
+                            <option value selected disabled>Day</option>
+                        </select>
+                        <select type="dob" id="year" name="year" required>
+                            <option value selected disabled>Year</option>
+                        </select>
+   
+                    </div>
+                </div>
+            
+                <div class="form-group"> 
+                    <label for="address">Address:</label>
+                    <textarea id="address" name="address" rows="4" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    <div id="confirmPasswordMessage"></div>
+                </div>
+
+                <button type="submit" id="register">Register</button>
+            </form>
+        </div>
+        <div id="text-container">
+        <h1>Eventually</h1>
+        <h1 id="phrase">"Book Moments, Not Just Tickets"</h1>
+        </div>
+        <img src="web_logo.png">
+        
+    </div>
+</div>
+   
+    <script src="signup-script.js"></script>
+    <script>
+           const tween1 = KUTE.fromTo(
+          '#wave1',
+          { path: '#wave1' },
+          { path: '#wave1next' },
+          { repeat: 999, duration: 5000, yoyo: true },
+        ).start();
+        const tween2= KUTE.fromTo(
+          '#wave2',
+          { path: '#wave2' },
+          { path: '#wave2next' },
+          { repeat: 999, duration: 5000, yoyo: true },
+        ).start();
+        const tween3 = KUTE.fromTo(
+          '#wave3',
+          { path: '#wave3' },
+          { path: '#wave3next' },
+          { repeat: 999, duration: 5000, yoyo: true },
+        ).start();
+        const tween4 = KUTE.fromTo(
+          '#wave4',
+          { path: '#wave4' },
+          { path: '#wave4next' },
+          { repeat: 999, duration: 5000, yoyo: true },
+        ).start();
+        const tween5 = KUTE.fromTo(
+          '#wave5',
+          { path: '#wave5' },
+          { path: '#wave5next' },
+          { repeat: 999, duration: 5000, yoyo: true },
+        ).start();
+    </script>
+</body>
+<div id="loading-overlay" class="loading-overlay">
+    <div class="loading-spinner"></div>
+</div>
+</html>

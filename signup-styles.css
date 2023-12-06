@@ -1,0 +1,237 @@
+
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-image: url(bg.jpg);
+    overflow-x: hidden;
+    font-family: 'Century Gothic';
+}
+.blur{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px); 
+}
+
+.form-container {
+    display: flex;
+    justify-content: left; 
+    align-items: center;
+    height: 100vh;
+    margin-left: 5em;
+    margin-top: .5em;
+}
+
+.signup-form {
+    background-color: #fff; 
+    width: 500px;
+    height: 725px;
+    padding: 15px 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #333; 
+    text-align: center;
+    font-family: 'Signika';
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: left; 
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+#dob-align {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#dob-selects {
+    display: flex;
+    margin: 0;
+}
+select{
+    height: 3em;
+    border-radius: 0;
+    border-color: #716d6d;
+    padding-left: 10px;
+    transition: .2s;
+}
+#month{
+    border-radius: 10px 0 0 10px;
+    width: 192px;
+}
+#day{
+    width: 152px;
+}
+#year{
+    border-radius: 0 10px 10px 0;
+    width: 152px;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+label {
+    color: #555; 
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+input,
+textarea {
+    width: 100%;
+    height: 3em;
+    padding: 10px;
+    border: 1px solid #716d6d; 
+    border-radius: 10px;
+    box-sizing: border-box; 
+}
+textarea{
+    max-width: 100%;
+}
+
+button { /* button transition carousel*/
+    --color1: #2D319F;
+    align-self: center;
+    width: 80%;
+    padding: 10px;
+    position: relative;
+    overflow: hidden;
+    background-color: transparent;
+    border-radius: 1em;
+    cursor: pointer;
+    transition: 1.5s;
+    font-weight: 700;
+    font-size: 18px;
+    border: 2px solid;
+    text-transform: uppercase;
+    color: var(--color1);
+    z-index: 1;
+}
+button::before, button::after{
+    content: '';
+    display: block;
+    width: 50px;
+    height: 50px;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    border-radius: 50%;
+    z-index: -1;
+    background-color: var(--color1);
+    transition: 1s ease; 
+}
+button::before{
+    top: -1em;
+    left: -1em;
+}
+button::after{
+    left: calc(100% + 1em);
+    top: calc(100% + 1em);
+}
+button:hover::before, button:hover::after{
+    height: 600px;
+    width: 600px;
+}
+button:hover{
+    color: white;
+}
+button:active{
+    filter: brightness(.8); 
+} 
+.blob{
+    position: absolute;
+    top:275px;
+    width: 2400px;
+    height: 600px;
+    transform: scale(1.7);
+    z-index: -1;
+    opacity: 0.5;
+}
+img{
+    position: relative;
+    display: block;
+    z-index: 50;
+    width: 260px;
+    height: 260px;
+    margin-bottom: 50px;
+    margin-left: 80px;
+}
+h1{
+    font-family: 'Signika';
+    font-size: 100px;
+    left: 100px;
+    position: relative;
+    color: rgb(255, 255, 255);
+    text-shadow: -1px -1px 2px #d3d3d3, 1px -1px 2px #000, -1px 1px 2px #000, 1px 1px 2px #000;
+}
+#phrase{
+    font-size: 24px;
+    position: relative;
+    bottom:100px;
+    font-family: 'Calibri';
+    font-weight: 400;
+    color: white;
+    text-shadow: -1px -1px 2px #000, 1px -1px 2px #000, -1px 1px 2px #000, 1px 1px 2px #000;
+}
+
+#text-container{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    bottom:10px;
+    left:120px;
+}
+img{
+    transform: scale(0.5);
+    position: relative;
+    right: 500px;;
+}
+.loading-overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 1); 
+    z-index: 1000;
+}
+
+.loading-overlay.hide {
+    opacity: 0; 
+    pointer-events: none; 
+}
+
+.loading-spinner {
+    border: 6px solid #f3f3f3; 
+    border-top: 6px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite; 
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media screen and (max-height: 800px){
+    .signup-form{
+        transform: scale(0.9);
+    }
+}

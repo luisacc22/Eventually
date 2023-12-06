@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="icon" href="web_logo.png">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Signika:wght@500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="buyticket-styles.css">
+        <title>Eventually</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://kit.fontawesome.com/6a89f395ac.js" crossorigin="anonymous"></script>
+        <script src="buyticket-script.js"></script>
+        <script src="script.js"></script>
+        <script type="module">
+
+        document.addEventListener("DOMContentLoaded", function () {
+        const userString = sessionStorage.getItem("user");
+
+            if (userString) {
+            const user = JSON.parse(userString);
+            console.log("User already logged in:", user);
+            document.getElementById('login').style.display = 'none';
+            document.getElementById('sign-up').style.display = 'none';
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('logout').style.display = '';
+             } else {
+             console.log("No user logged in.");
+            }
+            });
+
+               import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-analytics.js";
+        import {getAuth, signInWithEmailAndPassword, signOut} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyDx3w3AbkcObfBIouSly5lkENCxqr6ybJ8",
+          authDomain: "specrel-eventuall.firebaseapp.com",
+          projectId: "specrel-eventuall",
+          storageBucket: "specrel-eventuall.appspot.com",
+          messagingSenderId: "1072983230032",
+          appId: "1:1072983230032:web:bc6f773b3dbd76eb6e7355",
+          measurementId: "G-CHNBRM8KT3"
+	  };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth();
+
+        document.getElementById('logout').style.display = 'none';
+        document.getElementById("login-button").addEventListener("click", function() {
+        var email =  document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                console.log(user);
+
+               
+                sessionStorage.setItem("user", JSON.stringify(user));
+
+                document.getElementById('login').style.display = 'none';
+                document.getElementById('sign-up').style.display = 'none';
+                document.getElementById('popup').style.display = 'none';
+                document.getElementById('logout').style.display = '';
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorMessage);
+                alert(errorMessage);
+            });		  
+    });
+
+
+      document.getElementById("logout").addEventListener("click", function() {
+    signOut(auth).then(() => {
+        // Sign-out successful.
+        sessionStorage.removeItem("user");
+        console.log('Sign-out successful.');
+        alert('Sign-out successful.');
+        
+        window.location.href = 'index.html';
+    }).catch((error) => {
+        console.log('An error happened.');
+    });
+});
+        </script>
+        </head>
+        <body>
+           <nav> 
+                <input type="checkbox" id="check">
+                    <label for="check" class="bars">
+                        <i class="fa-sharp fa-solid fa-bars"></i>
+                    </label>
+                <label class="logo" onclick="home()">EVENTUALLY</label>
+                <img id="logo" src="web_logo.png">
+                <ul>
+                    <li><a id="login" class="open-popup-btn" onclick="openPopup()">LOGIN</a></li>
+                    <li><a id="sign-up" href="signup.html">SIGNUP</a></li>
+                    <li><a id="logout">LOGOUT</a></li>
+                </ul>
+              </nav>  nav bar 
+          
+
+            <div class="detail-container">
+                <div class="blob-container">
+                    <svg xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                          <filter id="goo">
+                            <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+                            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo" />
+                            <feBlend in="SourceGraphic" in2="goo" />
+                          </filter>
+                        </defs>
+                      </svg>
+                <div class="blob1">
+                    <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" id="blobSvg1">
+                        <defs>
+                            <linearGradient id="gradient1" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="100%" style="stop-color: #1d15bb"></stop>
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#gradient1)" d="M404.5,276.5Q341,313,308.5,331.5Q276,350,231,377.5Q186,405,170,354Q154,303,85.5,271.5Q17,240,44,178.5Q71,117,139,128Q207,139,243.5,127.5Q280,116,315.5,137.5Q351,159,409.5,199.5Q468,240,404.5,276.5Z">
+                            <animate attributeName="d" dur="10s" repeatCount="indefinite" values="M404.5,276.5Q341,313,308.5,331.5Q276,350,231,377.5Q186,405,170,354Q154,303,85.5,271.5Q17,240,44,178.5Q71,117,139,128Q207,139,243.5,127.5Q280,116,315.5,137.5Q351,159,409.5,199.5Q468,240,404.5,276.5Z;
+                                M376,275.5Q338,311,323.5,381.5Q309,452,253,412Q197,372,175,337.5Q153,303,133.5,271.5Q114,240,95,180.5Q76,121,122.5,72Q169,23,230.5,52Q292,81,330,114Q368,147,391,193.5Q414,240,376,275.5Z;
+                                M428,309Q429,378,354.5,370Q280,362,241.5,357.5Q203,353,148.5,349.5Q94,346,76,293Q58,240,101.5,205.5Q145,171,157.5,97.5Q170,24,241,22Q312,20,311,104.5Q310,189,368.5,214.5Q427,240,428,309Z;
+                                M404.5,276.5Q341,313,308.5,331.5Q276,350,231,377.5Q186,405,170,354Q154,303,85.5,271.5Q17,240,44,178.5Q71,117,139,128Q207,139,243.5,127.5Q280,116,315.5,137.5Q351,159,409.5,199.5Q468,240,404.5,276.5Z;">
+                            </animate>
+                        </path>
+                    </svg>
+                </div>
+                <div class="blob2">
+                    <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" id="blobSvg1">
+                        <defs>
+                            <linearGradient id="gradient2" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="100%" style="stop-color: rgb(54, 38, 160)"></stop>
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#gradient2)" d="M404.5,276.5Q341,313,308.5,331.5Q276,350,231,377.5Q186,405,170,354Q154,303,85.5,271.5Q17,240,44,178.5Q71,117,139,128Q207,139,243.5,127.5Q280,116,315.5,137.5Q351,159,409.5,199.5Q468,240,404.5,276.5Z">
+                            <animate attributeName="d" dur="10s" repeatCount="indefinite" values="M404.5,276.5Q341,313,308.5,331.5Q276,350,231,377.5Q186,405,170,354Q154,303,85.5,271.5Q17,240,44,178.5Q71,117,139,128Q207,139,243.5,127.5Q280,116,315.5,137.5Q351,159,409.5,199.5Q468,240,404.5,276.5Z;
+                                M376,275.5Q338,311,323.5,381.5Q309,452,253,412Q197,372,175,337.5Q153,303,133.5,271.5Q114,240,95,180.5Q76,121,122.5,72Q169,23,230.5,52Q292,81,330,114Q368,147,391,193.5Q414,240,376,275.5Z;
+                                M428,309Q429,378,354.5,370Q280,362,241.5,357.5Q203,353,148.5,349.5Q94,346,76,293Q58,240,101.5,205.5Q145,171,157.5,97.5Q170,24,241,22Q312,20,311,104.5Q310,189,368.5,214.5Q427,240,428,309Z;
+                                M404.5,276.5Q341,313,308.5,331.5Q276,350,231,377.5Q186,405,170,354Q154,303,85.5,271.5Q17,240,44,178.5Q71,117,139,128Q207,139,243.5,127.5Q280,116,315.5,137.5Q351,159,409.5,199.5Q468,240,404.5,276.5Z;">
+                            </animate>
+                        </path>
+                    </svg>
+                </div>
+                <div class="blob3">
+                    <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" id="blobSvg1">
+                        <defs>
+                            <linearGradient id="gradient3" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="100%" style="stop-color: #cd5912"></stop>
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#gradient3)" d="M384,297Q376,354,324.5,389.5Q273,425,231,377Q189,329,144.5,310Q100,291,80.5,233Q61,175,97.5,116Q134,57,202.5,60.5Q271,64,297.5,117Q324,170,358,205Q392,240,384,297Z">
+                            <animate attributeName="d" dur="10s" repeatCount="indefinite" values="M384,297Q376,354,324.5,389.5Q273,425,231,377Q189,329,144.5,310Q100,291,80.5,233Q61,175,97.5,116Q134,57,202.5,60.5Q271,64,297.5,117Q324,170,358,205Q392,240,384,297Z;
+                            M328.5,274Q321,308,289.5,326.5Q258,345,190,395Q122,445,114,367Q106,289,137,251.5Q168,214,184.5,193.5Q201,173,235,123Q269,73,282.5,133Q296,193,316,216.5Q336,240,328.5,274Z;
+                                M356.5,267.5Q305,295,290,367.5Q275,440,237.5,375Q200,310,171.5,292.5Q143,275,111.5,228.5Q80,182,141.5,179Q203,176,238,115.5Q273,55,341,76.5Q409,98,408.5,169Q408,240,356.5,267.5Z;
+                                M384,297Q376,354,324.5,389.5Q273,425,231,377Q189,329,144.5,310Q100,291,80.5,233Q61,175,97.5,116Q134,57,202.5,60.5Q271,64,297.5,117Q324,170,358,205Q392,240,384,297Z;">
+                            </animate>
+                        </path>
+                    </svg>
+                </div>
+                <div class="blob4">
+                    <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" id="blobSvg1">
+                        <defs>
+                            <linearGradient id="gradient4" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="100%" style="stop-color: rgb(224, 76, 89)"></stop>
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#gradient4)" d="M404.5,276.5Q341,313,308.5,331.5Q276,350,231,377.5Q186,405,170,354Q154,303,85.5,271.5Q17,240,44,178.5Q71,117,139,128Q207,139,243.5,127.5Q280,116,315.5,137.5Q351,159,409.5,199.5Q468,240,404.5,276.5Z">
+                            <animate attributeName="d" dur="10s" repeatCount="indefinite" values="M404.5,276.5Q341,313,308.5,331.5Q276,350,231,377.5Q186,405,170,354Q154,303,85.5,271.5Q17,240,44,178.5Q71,117,139,128Q207,139,243.5,127.5Q280,116,315.5,137.5Q351,159,409.5,199.5Q468,240,404.5,276.5Z;
+                                M376,275.5Q338,311,323.5,381.5Q309,452,253,412Q197,372,175,337.5Q153,303,133.5,271.5Q114,240,95,180.5Q76,121,122.5,72Q169,23,230.5,52Q292,81,330,114Q368,147,391,193.5Q414,240,376,275.5Z;
+                                M428,309Q429,378,354.5,370Q280,362,241.5,357.5Q203,353,148.5,349.5Q94,346,76,293Q58,240,101.5,205.5Q145,171,157.5,97.5Q170,24,241,22Q312,20,311,104.5Q310,189,368.5,214.5Q427,240,428,309Z;
+                                M404.5,276.5Q341,313,308.5,331.5Q276,350,231,377.5Q186,405,170,354Q154,303,85.5,271.5Q17,240,44,178.5Q71,117,139,128Q207,139,243.5,127.5Q280,116,315.5,137.5Q351,159,409.5,199.5Q468,240,404.5,276.5Z;">
+                            </animate>
+                        </path>
+                    </svg>
+                </div>
+                <div class="blob5">
+                    <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" id="blobSvg1">
+                        <defs>
+                            <linearGradient id="gradient5" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="100%" style="stop-color: rgb(184, 36, 17);"></stop>
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#gradient5)" d="M404.5,276.5Q341,313,308.5,331.5Q276,350,231,377.5Q186,405,170,354Q154,303,85.5,271.5Q17,240,44,178.5Q71,117,139,128Q207,139,243.5,127.5Q280,116,315.5,137.5Q351,159,409.5,199.5Q468,240,404.5,276.5Z">
+                            <animate attributeName="d" dur="10s" repeatCount="indefinite" values="M404.5,276.5Q341,313,308.5,331.5Q276,350,231,377.5Q186,405,170,354Q154,303,85.5,271.5Q17,240,44,178.5Q71,117,139,128Q207,139,243.5,127.5Q280,116,315.5,137.5Q351,159,409.5,199.5Q468,240,404.5,276.5Z;
+                                M376,275.5Q338,311,323.5,381.5Q309,452,253,412Q197,372,175,337.5Q153,303,133.5,271.5Q114,240,95,180.5Q76,121,122.5,72Q169,23,230.5,52Q292,81,330,114Q368,147,391,193.5Q414,240,376,275.5Z;
+                                M428,309Q429,378,354.5,370Q280,362,241.5,357.5Q203,353,148.5,349.5Q94,346,76,293Q58,240,101.5,205.5Q145,171,157.5,97.5Q170,24,241,22Q312,20,311,104.5Q310,189,368.5,214.5Q427,240,428,309Z;
+                                M404.5,276.5Q341,313,308.5,331.5Q276,350,231,377.5Q186,405,170,354Q154,303,85.5,271.5Q17,240,44,178.5Q71,117,139,128Q207,139,243.5,127.5Q280,116,315.5,137.5Q351,159,409.5,199.5Q468,240,404.5,276.5Z;">
+                            </animate>
+                        </path>
+                    </svg>
+                </div>
+                <div class="blob6">
+                    <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" id="blobSvg1">
+                        <defs>
+                            <linearGradient id="gradient6" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="100%" style="stop-color: rgb(47, 34, 164)"></stop>
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#gradient6)" d="M404.5,276.5Q341,313,308.5,331.5Q276,350,231,377.5Q186,405,170,354Q154,303,85.5,271.5Q17,240,44,178.5Q71,117,139,128Q207,139,243.5,127.5Q280,116,315.5,137.5Q351,159,409.5,199.5Q468,240,404.5,276.5Z">
+                            <animate attributeName="d" dur="10s" repeatCount="indefinite" values="M404.5,276.5Q341,313,308.5,331.5Q276,350,231,377.5Q186,405,170,354Q154,303,85.5,271.5Q17,240,44,178.5Q71,117,139,128Q207,139,243.5,127.5Q280,116,315.5,137.5Q351,159,409.5,199.5Q468,240,404.5,276.5Z;
+                                M376,275.5Q338,311,323.5,381.5Q309,452,253,412Q197,372,175,337.5Q153,303,133.5,271.5Q114,240,95,180.5Q76,121,122.5,72Q169,23,230.5,52Q292,81,330,114Q368,147,391,193.5Q414,240,376,275.5Z;
+                                M428,309Q429,378,354.5,370Q280,362,241.5,357.5Q203,353,148.5,349.5Q94,346,76,293Q58,240,101.5,205.5Q145,171,157.5,97.5Q170,24,241,22Q312,20,311,104.5Q310,189,368.5,214.5Q427,240,428,309Z;
+                                M404.5,276.5Q341,313,308.5,331.5Q276,350,231,377.5Q186,405,170,354Q154,303,85.5,271.5Q17,240,44,178.5Q71,117,139,128Q207,139,243.5,127.5Q280,116,315.5,137.5Q351,159,409.5,199.5Q468,240,404.5,276.5Z;">
+                            </animate>
+                        </path>
+                    </svg>
+                </div>
+                <div class="blob7">
+                    <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" id="blobSvg1">
+                        <defs>
+                            <linearGradient id="gradient7" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="100%" style="stop-color: rgb(165, 31, 94)"></stop>
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#gradient7)" d="M404.5,276.5Q341,313,308.5,331.5Q276,350,231,377.5Q186,405,170,354Q154,303,85.5,271.5Q17,240,44,178.5Q71,117,139,128Q207,139,243.5,127.5Q280,116,315.5,137.5Q351,159,409.5,199.5Q468,240,404.5,276.5Z">
+                            <animate attributeName="d" dur="10s" repeatCount="indefinite" values="M404.5,276.5Q341,313,308.5,331.5Q276,350,231,377.5Q186,405,170,354Q154,303,85.5,271.5Q17,240,44,178.5Q71,117,139,128Q207,139,243.5,127.5Q280,116,315.5,137.5Q351,159,409.5,199.5Q468,240,404.5,276.5Z;
+                                M376,275.5Q338,311,323.5,381.5Q309,452,253,412Q197,372,175,337.5Q153,303,133.5,271.5Q114,240,95,180.5Q76,121,122.5,72Q169,23,230.5,52Q292,81,330,114Q368,147,391,193.5Q414,240,376,275.5Z;
+                                M428,309Q429,378,354.5,370Q280,362,241.5,357.5Q203,353,148.5,349.5Q94,346,76,293Q58,240,101.5,205.5Q145,171,157.5,97.5Q170,24,241,22Q312,20,311,104.5Q310,189,368.5,214.5Q427,240,428,309Z;
+                                M404.5,276.5Q341,313,308.5,331.5Q276,350,231,377.5Q186,405,170,354Q154,303,85.5,271.5Q17,240,44,178.5Q71,117,139,128Q207,139,243.5,127.5Q280,116,315.5,137.5Q351,159,409.5,199.5Q468,240,404.5,276.5Z;">
+                            </animate>
+                        </path>
+                    </svg>
+                </div>
+                <div class="blob8">
+                    <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" id="blobSvg1">
+                        <defs>
+                            <linearGradient id="gradient8" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="100%" style="stop-color: rgb(55, 38, 170)"></stop>
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#gradient8)" d="M404.5,276.5Q341,313,308.5,331.5Q276,350,231,377.5Q186,405,170,354Q154,303,85.5,271.5Q17,240,44,178.5Q71,117,139,128Q207,139,243.5,127.5Q280,116,315.5,137.5Q351,159,409.5,199.5Q468,240,404.5,276.5Z">
+                            <animate attributeName="d" dur="10s" repeatCount="indefinite" values="M404.5,276.5Q341,313,308.5,331.5Q276,350,231,377.5Q186,405,170,354Q154,303,85.5,271.5Q17,240,44,178.5Q71,117,139,128Q207,139,243.5,127.5Q280,116,315.5,137.5Q351,159,409.5,199.5Q468,240,404.5,276.5Z;
+                                M376,275.5Q338,311,323.5,381.5Q309,452,253,412Q197,372,175,337.5Q153,303,133.5,271.5Q114,240,95,180.5Q76,121,122.5,72Q169,23,230.5,52Q292,81,330,114Q368,147,391,193.5Q414,240,376,275.5Z;
+                                M428,309Q429,378,354.5,370Q280,362,241.5,357.5Q203,353,148.5,349.5Q94,346,76,293Q58,240,101.5,205.5Q145,171,157.5,97.5Q170,24,241,22Q312,20,311,104.5Q310,189,368.5,214.5Q427,240,428,309Z;
+                                M404.5,276.5Q341,313,308.5,331.5Q276,350,231,377.5Q186,405,170,354Q154,303,85.5,271.5Q17,240,44,178.5Q71,117,139,128Q207,139,243.5,127.5Q280,116,315.5,137.5Q351,159,409.5,199.5Q468,240,404.5,276.5Z;">
+                            </animate>
+                        </path>
+                    </svg>
+                </div>
+            </div>
+
+                <div class="detail-box">
+                    <div class="img-holder">
+                        <img id="img-card">
+                    </div>
+                    <div class="text-details">
+                    <h2>Event Name</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <div class="buttons">
+                        <button class="custom-button" id="date-holder">Make Payment</button>
+                        <button class="custom-button" id="venue-holder">Make Payment</button>
+                            </div>
+                        </div>
+                    </div>
+                   
+                   
+                </div>
+                
+                <div class="popup-container" id="popup"> <!-- login form-->
+                    <div class="popup">
+                        <h2>Login</h2>
+                        <span class="close-popup-btn" onclick="closePopup()"><i id="x" class="fa-solid fa-xmark"></i></span>
+                
+                        <form action="#" method="post">
+                            <label for="email">Email</label>
+                            <input type="email;" id="email" name="email" required>
+                            
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" required>
+                            <p><a>Forgot Password?</a></p>
+                            </form>
+                            <button id="login-button" type="submit">LOGIN</button>
+                            <p>Don't have an account?<a> Register</a></p>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="buy">
+                    <p><a>Buy Ticket</a></p>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path fill="#ffffff" d="M253.3 35.1c6.1-11.8 1.5-26.3-10.2-32.4s-26.3-1.5-32.4 10.2L117.6 192H32c-17.7 0-32 14.3-32 32s14.3 32 32 32L83.9 463.5C91 492 116.6 512 146 512H430c29.4 0 55-20 62.1-48.5L544 256c17.7 0 32-14.3 32-32s-14.3-32-32-32H458.4L365.3 12.9C359.2 1.2 344.7-3.4 332.9 2.7s-16.3 20.6-10.2 32.4L404.3 192H171.7L253.3 35.1zM192 304v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16s16 7.2 16 16zm96-16c8.8 0 16 7.2 16 16v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16zm128 16v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16s16 7.2 16 16z"/></svg>
+                    <img id="ticket" src="ticket.png">
+                </div>
+
+        </body>
+        </html>

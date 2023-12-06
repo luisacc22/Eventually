@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="icon" href="web_logo.png">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Signika:wght@500&display=swap" rel="stylesheet">
+        
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <title>Eventually</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.jsdelivr.net/npm/kute.js@2.1.2/dist/kute.min.js"></script>
+        <script src="https://kit.fontawesome.com/6a89f395ac.js" crossorigin="anonymous"></script>
+        <script type="module">
+
+        
+          import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-analytics.js";
+        import {getAuth, signInWithEmailAndPassword, signOut} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyDx3w3AbkcObfBIouSly5lkENCxqr6ybJ8",
+          authDomain: "specrel-eventuall.firebaseapp.com",
+          projectId: "specrel-eventuall",
+          storageBucket: "specrel-eventuall.appspot.com",
+          messagingSenderId: "1072983230032",
+          appId: "1:1072983230032:web:bc6f773b3dbd76eb6e7355",
+          measurementId: "G-CHNBRM8KT3"
+	  };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth();
+
+        document.getElementById('logout').style.display = 'none';
+        document.getElementById("login-button").addEventListener("click", function() {
+        var email =  document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                console.log(user);
+
+               
+                sessionStorage.setItem("user", JSON.stringify(user));
+
+                document.getElementById('login').style.display = 'none';
+                document.getElementById('sign-up').style.display = 'none';
+                document.getElementById('popup').style.display = 'none';
+                document.getElementById('logout').style.display = '';
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorMessage);
+                alert(errorMessage);
+            });		  
+    });
+
+    document.getElementById('loading-overlay').style.display = 'flex';
+    window.addEventListener("load", function() {
+    const userString = sessionStorage.getItem("user");
+
+    document.getElementById('loading-overlay').classList.remove('hide'); 
+
+    setTimeout(() =>{
+    document.getElementById('loading-overlay').classList.add('hide');
+    }, 1000);
+
+    if (userString) {
+        const user = JSON.parse(userString);
+        console.log("User already logged in:", user); // button hide
+        document.getElementById('login').style.display = 'none';
+        document.getElementById('sign-up').style.display = 'none';
+        document.getElementById('popup').style.display = 'none';
+        document.getElementById('logout').style.display = ''
+    } else {
+        console.log("No user logged in.");
+    } 		  
+	  });
+
+      document.getElementById("logout").addEventListener("click", function() {
+		  signOut(auth).then(() => {
+			  // Sign-out successful.
+              sessionStorage.removeItem("user");
+			  console.log('Sign-out successful.');
+			  alert('Sign-out successful.');
+			  document.getElementById('logout').style.display = 'none';
+              document.getElementById('login').style.display = '';
+              document.getElementById('sign-up').style.display = '';
+			}).catch((error) => {
+			  console.log('An error happened.');
+			});		  		  
+	  });
+        </script>
+    </head>
+    <body>
+        <nav> 
+            <input type="checkbox" id="check">
+                <label for="check" class="bars">
+                    <i class="fa-sharp fa-solid fa-bars"></i>
+                </label>
+            <label class="logo" onclick="gohome()">EVENTUALLY</label>
+            <img id="logo" src="web_logo.png">
+            <ul>
+                <li><a id="login" class="open-popup-btn" onclick="openPopup()">LOGIN</a></li>
+                <li><a id="sign-up" href="signup.html">SIGNUP</a></li>
+                <li><a id="logout">LOGOUT</a></li>
+            </ul>
+          </nav> <!-- nav bar -->
+
+          <div class="decline-popup" id="declinePopup">
+            <div class="decline-popup-content">
+             <span class="decline-close-popup-btn" onclick="closeDeclinePopup()"><i id="x" class="fa-solid fa-xmark"></i></span>
+              <h2>Please Log In</h2>
+              <p>You need to log in to buy tickets.</p>
+           
+            </div>
+          </div>
+
+          <div class="main_div">
+            <div class="main_div_pic">
+                <div class="slider-container">
+                    <div class="slider">
+                        <div class="slide"><img src="cover/disney_slide.jpg" alt="Slide 1"></div>
+                        <div class="slide"><img src="cover/daryl_slide.jpg" alt="Slide 2"></div>
+                        <div class="slide"><img src="cover/rod_slide.jpg" alt="Slide 3"></div>
+                        <div class="slide"><img src="cover/seventeen_slide.jpg" alt="Slide 4"></div>
+                        <div class="slide"><img src="cover/bts_slide.jpg" alt="Slide 5"></div>
+                        <div class="slide"><img src="cover/coldplay_slide.jpg" alt="Slide 6"></div>
+                        <div class="slide"><img src="cover/edsheeran_slide.jpg" alt="Slide 7"></div>
+                        <div class="slide"><img src="cover/rivermaya_slide.jpg" alt="Slide 8"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <h3 id="concert_title">CONCERTS</h3>
+            <hr>
+            <ul class="card-list">
+                <li class="card">
+                    <img src="poster/disney.jpg" alt="Event 1">
+                    <h3>2023 DISNEY ON ICE 100 YEARS OF WONDER</h3>
+                    <p>Dec 22, 2023 - Jan 07, 2024</p>
+                    <p>SM Mall Of Asia Arena</p>
+                    <button onclick="redirectToBuy('disney')">Buy Tickets</button>
+                </li>
+                <li class="card">
+                    <img src="poster/daryl.jpg" alt="Event 2">
+                    <h3>Daryl</h3>
+                    <p>Date: June 1, 2023</p>
+                    <p>Location: Venue 1</p>
+                    <button class="unavail" >Unavailable</button>
+                </li>
+                <li class="card">
+                    <img src="poster/rod.jpg" alt="Event 3">
+                    <h3>ROD STEWART LIVE ON CONCERT</h3>
+                    <p>Mar 12, 2024</p>
+                    <p>SM Mall Of Asia Arena</p>
+                    <button onclick="redirectToBuy('rod')">Buy Tickets</button>
+                </li>
+                <li class="card">
+                    <img src="poster/seventeen.jpg" alt="Event 4">
+                    <h3>SEVENTEEN JAN 13 - SHUTTLE BUS</h3>
+                    <p>Jan 13, 2024</p>
+                    <p>Philippine Arena</p>
+                    <button onclick="redirectToBuy('seventeen')">Buy Tickets</button>
+                </li>
+                <li class="card">
+                    <img src="poster/bts.jpg" alt="Event 5">
+                    <h3>BTS</h3>
+                    <p>Date: June 1, 2023</p>
+                    <p>Location: Venue 1</p>
+                    <button class="unavail" >Unavailable</button>
+                </li>
+                <li class="card">
+                    <img src="poster/coldplay.jpg" alt="Event 6">
+                    <h3>COLDPLAY JAN 19 - SHUTTLE BUS</h3>
+                    <p>Jan 19, 2024</p>
+                    <p>Philippine Arena</p>
+                    <button onclick="redirectToBuy('coldplay')">Buy Tickets</button>
+                </li>
+                <li class="card">
+                    <img src="poster/edsheeran.jpg" alt="Event 7">
+                    <h3>ED SHEERAN</h3>
+                    <p>March 09, 2024</p>
+                    <p>SMDC Festival Grounds</p>
+                    <button onclick="redirectToBuy('edsheeran')">Buy Tickets</button>
+                </li>
+                <li class="card">
+                    <img src="poster/rivermaya.jpg" alt="Event 8">
+                    <h3>RIVERMAYA THE REUNION</h3>
+                    <p>Feb 17, 2024</p>
+                    <p>SMDC Festival Grounds</p>
+                    <button onclick="redirectToBuy('rivermaya')">Buy Tickets</button>
+                </li>
+                </ul>
+
+                <div class="popup-container" id="popup"> <!-- login form-->
+                    <div class="popup">
+                        <h2>Login</h2>
+                        <span class="close-popup-btn" onclick="closePopup()"><i id="x" class="fa-solid fa-xmark"></i></span>
+                
+                        <form action="#" method="post">
+                            <label for="email">Email</label>
+                            <input type="email;" id="email" name="email" required>
+                            
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" required>
+                            <p><a>Forgot Password?</a></p>
+                            </form>
+                            <button id="login-button" type="submit">LOGIN</button>
+                            <p>Don't have an account?<a> Register</a></p>
+                        </form>
+                    </div>
+                </div>
+
+                <footer>
+                   <p>All Rights Reserved</p>
+                </footer>
+        <script src="script.js">
+        </script>
+        <script src="buyticket-script.js"></script>
+    </body>
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+</html>
